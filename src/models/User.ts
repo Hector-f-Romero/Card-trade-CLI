@@ -2,7 +2,7 @@ type User = {
 	id: string;
 	username: string;
 	email: string;
-	lastRewardClaimedDate: Date | null;
+	lastRewardClaimedDate: string | null;
 };
 
 // We use a Singleton patter to create a global access for user variables. Only can exists one user at time.

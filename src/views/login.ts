@@ -8,6 +8,7 @@ import ora from "ora";
 
 import { UserSingleton } from "../models/User.js";
 import { loginUserService } from "../services/user.services.js";
+import { convertDateToUTC } from "../helpers/handleTime.js";
 
 export const loginMenu = async () => {
 	console.clear();
@@ -42,9 +43,11 @@ export const loginMenu = async () => {
 
 	// Go to home view and save the user data.
 	const { user } = UserSingleton.getInstance();
+	console.log(typeof userData.last_reward_claimed_date);
 	user.id = userData.user_id;
 	user.username = userData.username;
 	user.email = userData.email;
-	user.lastRewardClaimedDate = userData.last_reward_claimed_date;
+	// Save this date inside the Singleton with UTC format
+	user.lastRewardClaimedDate = convertDateToUTC(userData.last_reward_claimed_date);
 	return "home";
 };

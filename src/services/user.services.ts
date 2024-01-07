@@ -117,3 +117,30 @@ export const createUserService = async (username: string, password: string, emai
 	);
 	return result;
 };
+
+export const updateLastRewardDateService = async (user_id: string, newDate: unknown) => {
+	const queryUpdateLastRewardDate = `
+	mutation UpdateUser($userId: ID!, $lastRewardClaimedDate: String) {
+		updateUser(user_id: $userId, last_reward_claimed_date: $lastRewardClaimedDate) {
+		  user_id
+		  last_reward_claimed_date
+		}
+	  }`;
+
+	const result = axios.post(
+		`${process.env.BACKEND_URL}/v1/graphql`,
+		{
+			query: queryUpdateLastRewardDate,
+			variables: {
+				userId: user_id,
+				lastRewardClaimedDate: newDate,
+			},
+		},
+		{
+			headers: {
+				"Content-Type": "application/json",
+			},
+		}
+	);
+	return result;
+};

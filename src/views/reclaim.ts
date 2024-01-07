@@ -4,38 +4,66 @@ import chalk from "chalk";
 import { UserSingleton } from "../models/User.js";
 import { checkCanReclaimCards } from "../helpers/handleTime.js";
 import { getRandomCardsService } from "../services/card.services.js";
+import { setTimeout } from "timers/promises";
+import { applyColorToRarity } from "../helpers/applyColors.js";
+import { createSpinner } from "../helpers/customSpinner.js";
 
 const { user } = UserSingleton.getInstance();
-let canReclaimCards: boolean = false;
 
 export const reclaimCardsMenu = async () => {
 	console.clear();
-
-	canReclaimCards = checkCanReclaimCards(user.lastRewardClaimedDate);
+	const { canReclaim, remainingMinutes } = await checkCanReclaimCards();
 
 	const reclaimMenu = {
-		message: "Which option do you want a choose?",
+		message: "Which option do you want a choose? You can reclaim cards every 2 minutes",
 		choices: [
-			{ value: "reclaimCard", name: chalk.hex("2f9e44")("Reclaim"), disabled: !canReclaimCards },
+			{ value: "reclaimCard", name: chalk.hex("2f9e44")("Reclaim"), disabled: !canReclaim },
 			{ value: "home", name: chalk.hex("e03131")("Back to home") },
 		],
 	};
 
-	console.log("------------------------------------------------------------------------------");
-	console.log("                               You can reclaim now");
-	console.log("------------------------------------------------------------------------------\n");
+	let timerMessage: string = "";
+
+	if (canReclaim) {
+		timerMessage = `${chalk.whiteBright("	  You can reclaim now")}`;
+	} else {
+		timerMessage = `  You must wait ${chalk.redBright(remainingMinutes.toFixed(3))} minutes for reclaim`;
+	}
+
+	console.log(
+		`${chalk.whiteBright("=================================================================================")}`
+	);
+	console.log(`                               ${chalk.blueBright("Reclaim cards")}`);
+	console.log(`		${timerMessage}`);
+	console.log(
+		`${chalk.whiteBright("=================================================================================")}`
+	);
 	const option = await select(reclaimMenu);
 
 	if (option === "reclaimCard") {
 		// Get the random cards for the user.
-		console.log(user.id);
+		console.clear();
 		const { data } = await getRandomCardsService(user.id);
 		const cardsDB = data.data.getRandomCards;
 
-		// Save in the cards in user inventory
-		console.log(cardsDB);
-		// await setTimeout(7000);
+		console.log(
+			`${chalk.whiteBright("=================================================================================")}`
+		);
+		console.log(`			${chalk.greenBright("Congratulations!")}`);
+		console.log("		You have received these cards:");
+		console.log(
+			`${chalk.whiteBright(
+				"=================================================================================\n"
+			)}`
+		);
 
+		// Show cards in different console lines.
+		cardsDB.forEach((card) =>
+			console.log(`${chalk.cyan(card.name)} - ${applyColorToRarity(card.rarity)} [${card.amount}]`)
+		);
+
+		console.log("");
+		await createSpinner("Waiting while you appreciating your rewards", 6000);
 		return "reclaim";
 	} else {
 		return option;
