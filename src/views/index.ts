@@ -1,19 +1,20 @@
 import select from "@inquirer/select";
 import chalk from "chalk";
+import { MenuOptions } from "../types/menuOptions.types.js";
 
 const indexQuest = {
 	message: "Choose and option",
 	choices: [
 		{
-			value: "login",
+			value: MenuOptions.LOGIN,
 			name: chalk.greenBright("1. Login"),
 		},
 		{
-			value: "register",
+			value: MenuOptions.REGISTER,
 			name: chalk.cyanBright("2. Register"),
 		},
 		{
-			value: "exit",
+			value: MenuOptions.EXIT,
 			name: chalk.hex("e03131")("0. Exit"),
 		},
 	],

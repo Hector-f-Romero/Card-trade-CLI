@@ -1,3 +1,4 @@
+import { MenuOptions } from "./types/menuOptions.types.js";
 import { homeMenu } from "./views/home.js";
 import { indexMenu } from "./views/index.js";
 import { inventoryMenu } from "./views/inventory.js";
@@ -11,7 +12,7 @@ import { tradeMenu } from "./views/trade.js";
 const main = async () => {
 	console.clear();
 
-	let option: string = "index";
+	let option = MenuOptions.INDEX;
 	option = await indexMenu();
 
 	do {

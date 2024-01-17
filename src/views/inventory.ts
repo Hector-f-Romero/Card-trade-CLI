@@ -4,15 +4,8 @@ import chalk from "chalk";
 import { UserSingleton } from "../models/User.js";
 import { getInventoryUser } from "../services/user.services.js";
 import { applyColorToRarity } from "../helpers/applyColors.js";
-
-type InventoryCard = {
-	card_id: string;
-	name: string;
-	description: string;
-	value: number;
-	rarity: string;
-	amount: number;
-};
+import { MenuOptions } from "../types/menuOptions.types.js";
+import { CardPreviewMenu, InventoryCard } from "../types/inventory.types.js";
 
 const getUserCards = async () => {
 	try {
@@ -23,32 +16,43 @@ const getUserCards = async () => {
 		const cardsDB: InventoryCard[] = result.data.data.getUserInventory;
 
 		// TODO: fix the type for this variable
-		let cards: unknown[];
+		let cardsPreview: CardPreviewMenu[];
 
 		// If the users don't have any cards, display the following interface.
 		if (cardsDB.length === 0) {
-			cards = [
-				{ name: chalk.hex("FABC2C")("You don't any have cards yet"), value: "no-available", disabled: true },
+			cardsPreview = [
+				{
+					name: chalk.hex("FABC2C")("You don't any have cards yet"),
+					value: MenuOptions.NO_AVAILABLE,
+					disabled: true,
+				},
 			];
-			cards.push(new Separator("------------------------------------------------------"));
-			cards.push({ value: "home", name: chalk.hex("e03131")("Exit") });
-			cards.push(new Separator("------------------------------------------------------------------------------"));
-			return cards;
+			cardsPreview.push(new Separator("------------------------------------------------------"));
+			cardsPreview.push({ value: MenuOptions.HOME, name: chalk.hex("e03131")("Exit") });
+			cardsPreview.push(
+				new Separator("------------------------------------------------------------------------------")
+			);
+			return cardsPreview;
 		}
 
-		cards = cardsDB.map((card) => {
+		cardsPreview = cardsDB.map((card) => {
+			// value: card.card_id,
 			return {
-				value: card.card_id,
+				value: MenuOptions.NO_AVAILABLE,
 				name: `${chalk.cyan(card.name)} - ${applyColorToRarity(card.rarity)} [${card.amount}]`,
 			};
 		});
 
 		// Add 'exit' option to the end of the list.
-		cards.push(new Separator("------------------------------------------------------------------------------"));
-		cards.push({ value: "home", name: chalk.hex("e03131")("Exit") });
-		cards.push(new Separator("------------------------------------------------------------------------------"));
+		cardsPreview.push(
+			new Separator("------------------------------------------------------------------------------")
+		);
+		cardsPreview.push({ value: MenuOptions.HOME, name: chalk.hex("e03131")("Exit") });
+		cardsPreview.push(
+			new Separator("------------------------------------------------------------------------------")
+		);
 		// console.log(cards);
-		return cards;
+		return cardsPreview;
 	} catch (error: any) {
 		console.log(error.response.data);
 	}
@@ -60,13 +64,14 @@ export const inventoryMenu = async () => {
 	console.log(chalk.whiteBright("         		Look your cards 📂"));
 	console.log("______________________________________________________________________________\n");
 
+	// Return the types in specific format to display the user in console.
 	const cards = await getUserCards();
-	// console.log(cards);
 
-	const option: string = await select({
+	// Use Type Assertion to avoid problems with the type of choises attribute.
+	const option = (await select({
 		message: "Choose a card to get more information about this",
-		choices: cards,
+		choices: cards as CardPreviewMenu[],
 		pageSize: 15,
-	});
+	})) as MenuOptions;
 	return option;
 };

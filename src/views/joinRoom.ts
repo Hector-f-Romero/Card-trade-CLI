@@ -5,6 +5,7 @@ import input from "@inquirer/input";
 import { UserSingleton } from "../models/User.js";
 import { joinTradeRoomService } from "../services/roomTrade.services.js";
 import { createSpinner } from "../helpers/customSpinner.js";
+import { MenuOptions } from "../types/menuOptions.types.js";
 
 const { user } = UserSingleton.getInstance();
 
@@ -36,7 +37,7 @@ export const joinTradeRoomMenu = async () => {
 		}
 
 		console.log();
-		return "a";
+		return MenuOptions.HELP_TRADE_ROOM;
 	} catch (error) {
 		console.clear();
 		// console.log("Estoy en error");
@@ -45,8 +46,8 @@ export const joinTradeRoomMenu = async () => {
 		const option = await select({
 			message: "What do you want a do?",
 			choices: [
-				{ value: "joinRoom", name: "Enter another room id" },
-				{ value: "trade", name: "Back to trade menu" },
+				{ value: MenuOptions.JOIN_ROOM, name: "Enter another room id" },
+				{ value: MenuOptions.TRADE, name: "Back to trade menu" },
 			],
 		});
 		return option;

@@ -6,6 +6,7 @@ import chalk from "chalk";
 import { UserSingleton } from "../models/User.js";
 import { createUserService, verifyUserExist } from "../services/user.services.js";
 import { createSpinner } from "../helpers/customSpinner.js";
+import { MenuOptions } from "../types/menuOptions.types.js";
 
 const { user } = UserSingleton.getInstance();
 
@@ -28,8 +29,8 @@ export const registerMenu = async () => {
 		const option = await select({
 			message: "The passwords don't match. Please try again.",
 			choices: [
-				{ value: "register", name: chalk.yellowBright("Try again") },
-				{ value: "index", name: chalk.hex("e03131")("Back") },
+				{ value: MenuOptions.REGISTER, name: chalk.yellowBright("Try again") },
+				{ value: MenuOptions.INDEX, name: chalk.hex("e03131")("Back") },
 			],
 		});
 		return option;
@@ -44,8 +45,8 @@ export const registerMenu = async () => {
 		const option = await select({
 			message: `The user ${verifyUsernameOrEmailExist[0].username} already exists. Try with another username`,
 			choices: [
-				{ value: "register", name: chalk.yellowBright("Try again") },
-				{ value: "index", name: chalk.hex("e03131")("Back") },
+				{ value: MenuOptions.REGISTER, name: chalk.yellowBright("Try again") },
+				{ value: MenuOptions.INDEX, name: chalk.hex("e03131")("Back") },
 			],
 		});
 		return option;
@@ -65,5 +66,5 @@ export const registerMenu = async () => {
 	console.log("               Welcome to GraphQL Card Trade");
 	console.log("---------------------------------------------------------\n");
 	await createSpinner(`Thanks you for registering ${user.username}. Wait while we do the final adjustments.`, 3000);
-	return "home";
+	return MenuOptions.HOME;
 };

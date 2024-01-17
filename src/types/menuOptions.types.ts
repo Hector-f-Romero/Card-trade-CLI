@@ -1,0 +1,15 @@
+export enum MenuOptions {
+	INDEX = "index",
+	LOGIN = "login",
+	REGISTER = "register",
+	HOME = "home",
+	INVENTORY = "inventory",
+	RECLAIM = "reclaim",
+	TRADE = "trade",
+	JOIN_ROOM = "joinRoom",
+	EXIT = "exit",
+	RECLAIM_CARDS = "reclaim",
+	CREATE_ROOM = "createRoom",
+	HELP_TRADE_ROOM = "helpTradeRoom",
+	NO_AVAILABLE = "no-available",
+}

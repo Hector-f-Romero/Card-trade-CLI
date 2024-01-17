@@ -9,6 +9,7 @@ import ora from "ora";
 import { UserSingleton } from "../models/User.js";
 import { loginUserService } from "../services/user.services.js";
 import { convertDateToUTC } from "../helpers/handleTime.js";
+import { MenuOptions } from "../types/menuOptions.types.js";
 
 export const loginMenu = async () => {
 	console.clear();
@@ -32,8 +33,8 @@ export const loginMenu = async () => {
 		const option = await select({
 			message: "What do you want to do?",
 			choices: [
-				{ value: "login", name: chalk.yellowBright("Try again") },
-				{ value: "index", name: chalk.hex("e03131")("Back") },
+				{ value: MenuOptions.LOGIN, name: chalk.yellowBright("Try again") },
+				{ value: MenuOptions.INDEX, name: chalk.hex("e03131")("Back") },
 			],
 		});
 		return option;
@@ -49,5 +50,5 @@ export const loginMenu = async () => {
 	user.email = userData.email;
 	// Save this date inside the Singleton with UTC format
 	user.lastRewardClaimedDate = convertDateToUTC(userData.last_reward_claimed_date);
-	return "home";
+	return MenuOptions.HOME;
 };

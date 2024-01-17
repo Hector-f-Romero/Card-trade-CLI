@@ -1,16 +1,17 @@
 import select from "@inquirer/select";
 import chalk from "chalk";
 import { UserSingleton } from "../models/User.js";
+import { MenuOptions } from "../types/menuOptions.types.js";
 
 const { user } = UserSingleton.getInstance();
 
 const homeQuest = {
 	message: "What do you want to do?",
 	choices: [
-		{ value: "inventory", name: chalk.hex("2f9e44")("Inventory") },
-		{ value: "reclaim", name: chalk.hex("1971c2")("Reclaim cards") },
-		{ value: "trade", name: chalk.hex("f08c00")("Trade") },
-		{ value: "index", name: chalk.hex("e03131")("Exit") },
+		{ value: MenuOptions.INVENTORY, name: chalk.hex("2f9e44")("Inventory") },
+		{ value: MenuOptions.RECLAIM, name: chalk.hex("1971c2")("Reclaim cards") },
+		{ value: MenuOptions.TRADE, name: chalk.hex("f08c00")("Trade") },
+		{ value: MenuOptions.INDEX, name: chalk.hex("e03131")("Exit") },
 	],
 };
 

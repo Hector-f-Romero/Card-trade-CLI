@@ -7,6 +7,7 @@ import { getRandomCardsService } from "../services/card.services.js";
 import { setTimeout } from "timers/promises";
 import { applyColorToRarity } from "../helpers/applyColors.js";
 import { createSpinner } from "../helpers/customSpinner.js";
+import { MenuOptions } from "../types/menuOptions.types.js";
 
 const { user } = UserSingleton.getInstance();
 
@@ -17,8 +18,8 @@ export const reclaimCardsMenu = async () => {
 	const reclaimMenu = {
 		message: "Which option do you want a choose? You can reclaim cards every 2 minutes",
 		choices: [
-			{ value: "reclaimCard", name: chalk.hex("2f9e44")("Reclaim"), disabled: !canReclaim },
-			{ value: "home", name: chalk.hex("e03131")("Back to home") },
+			{ value: MenuOptions.RECLAIM_CARDS, name: chalk.hex("2f9e44")("Reclaim"), disabled: !canReclaim },
+			{ value: MenuOptions.HOME, name: chalk.hex("e03131")("Back to home") },
 		],
 	};
 
@@ -40,7 +41,7 @@ export const reclaimCardsMenu = async () => {
 	);
 	const option = await select(reclaimMenu);
 
-	if (option === "reclaimCard") {
+	if (option === MenuOptions.RECLAIM_CARDS) {
 		// Get the random cards for the user.
 		console.clear();
 		const { data } = await getRandomCardsService(user.id);
@@ -64,7 +65,7 @@ export const reclaimCardsMenu = async () => {
 
 		console.log("");
 		await createSpinner("Waiting while you appreciating your rewards", 6000);
-		return "reclaim";
+		return MenuOptions.RECLAIM;
 	} else {
 		return option;
 	}
