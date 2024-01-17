@@ -1,9 +1,11 @@
 import { homeMenu } from "./views/home.js";
 import { indexMenu } from "./views/index.js";
 import { inventoryMenu } from "./views/inventory.js";
+import { joinTradeRoomMenu } from "./views/joinRoom.js";
 import { loginMenu } from "./views/login.js";
 import { reclaimCardsMenu } from "./views/reclaim.js";
 import { registerMenu } from "./views/register.js";
+import { tradeMenu } from "./views/trade.js";
 
 // Use a main function to hanlde menu and interfaces
 const main = async () => {
@@ -36,6 +38,10 @@ const main = async () => {
 				option = await reclaimCardsMenu();
 				break;
 			case "trade":
+				option = await tradeMenu();
+				break;
+			case "joinRoom":
+				option = await joinTradeRoomMenu();
 				break;
 			case "exit":
 				break;
