@@ -3,13 +3,13 @@ import { setTimeout } from "timers/promises";
 
 import input from "@inquirer/input";
 import chalk from "chalk";
-
-import { createClient } from "graphql-ws";
-
 import "dotenv/config";
+import { createClient } from "graphql-ws";
 
 import { UserSingleton } from "../models/User.js";
 import { createSpinner } from "./customSpinner.js";
+import { JoinToRoomResponse } from "../types/trade.types.js";
+import { tradeMenuList } from "../views/confirmTrade.js";
 
 export const connectUsers = async () => {};
 
@@ -78,15 +78,13 @@ export const establishConnectionHost = async (room_id: string, user: { user_id: 
 				},
 			},
 			{
-				next(data) {
+				next(data: { data: JoinToRoomResponse }) {
 					console.log("Función Next");
-
+					console.log(data);
 					const roomInformation = data.data.joinToRoom;
-					console.log(roomInformation.users);
-					console.log(`Bienvenido, usuario ${roomInformation.users[1].username}`);
 					client.terminate();
 					userJoin = true;
-					resolve(true);
+					resolve({ roomInformation, subscriptionToTradeRoom });
 				},
 				error(data) {
 					console.log("ERROR");
@@ -100,7 +98,7 @@ export const establishConnectionHost = async (room_id: string, user: { user_id: 
 			}
 		);
 		await createSpinner("Waiting for another user 10 seconds", 10000);
-		console.log("Terminaron los 10 segundos");
+		// console.log("Terminaron los 10 segundos");
 		if (!userJoin) {
 			client.terminate();
 			console.log("Se cerró la conexión");

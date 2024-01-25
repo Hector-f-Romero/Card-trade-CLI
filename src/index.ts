@@ -1,4 +1,5 @@
 import { MenuOptions } from "./types/menuOptions.types.js";
+import { createTradeRoomMenu } from "./views/createTradeRoom.js";
 import { homeMenu } from "./views/home.js";
 import { indexMenu } from "./views/index.js";
 import { inventoryMenu } from "./views/inventory.js";
@@ -6,7 +7,7 @@ import { joinTradeRoomMenu } from "./views/joinRoom.js";
 import { loginMenu } from "./views/login.js";
 import { reclaimCardsMenu } from "./views/reclaim.js";
 import { registerMenu } from "./views/register.js";
-import { tradeMenu } from "./views/trade.js";
+import { tradeCenterMenu } from "./views/tradeCenterMenu.js";
 
 // Use a main function to hanlde menu and interfaces
 const main = async () => {
@@ -18,37 +19,39 @@ const main = async () => {
 	do {
 		// Show the cli interface while the user doesn't choose 'exit'
 		switch (option) {
-			case "index":
+			case MenuOptions.INDEX:
 				option = await indexMenu();
 				break;
 			// Choose a login option
-			case "login":
-				// TODO: create login logic
+			case MenuOptions.LOGIN:
 				option = await loginMenu();
 				break;
-			case "register":
+			case MenuOptions.REGISTER:
 				option = await registerMenu();
 				break;
-			case "home":
+			case MenuOptions.HOME:
 				option = await homeMenu();
 				break;
-			case "inventory":
+			case MenuOptions.INVENTORY:
 				option = await inventoryMenu();
 				break;
-			case "reclaim":
+			case MenuOptions.RECLAIM_CARDS:
 				option = await reclaimCardsMenu();
 				break;
-			case "trade":
-				option = await tradeMenu();
+			case MenuOptions.TRADE:
+				option = await tradeCenterMenu();
 				break;
-			case "joinRoom":
+			case MenuOptions.CREATE_ROOM:
+				option = await createTradeRoomMenu();
+				break;
+			case MenuOptions.JOIN_ROOM:
 				option = await joinTradeRoomMenu();
 				break;
-			case "exit":
+			case MenuOptions.EXIT:
 				break;
 		}
 		// await pausa();
-	} while (option !== "exit");
+	} while (option !== MenuOptions.EXIT);
 	console.log("Thanks for all. Hope to see you later");
 	process.exit();
 };
