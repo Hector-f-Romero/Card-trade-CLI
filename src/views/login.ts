@@ -6,7 +6,7 @@ import password from "@inquirer/password";
 import chalk from "chalk";
 import ora from "ora";
 
-import { UserSingleton } from "../models/User.js";
+import { UserSingleton } from "../models/UserSingleton.js";
 import { loginUserService } from "../services/user.services.js";
 import { convertDateToUTC } from "../helpers/handleTime.js";
 import { MenuOptions } from "../types/menuOptions.types.js";

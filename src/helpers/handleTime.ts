@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc.js";
 
 import { updateLastRewardDateService } from "../services/user.services.js";
-import { UserSingleton } from "../models/User.js";
+import { UserSingleton } from "../models/UserSingleton.js";
 
 const { user } = UserSingleton.getInstance();
 

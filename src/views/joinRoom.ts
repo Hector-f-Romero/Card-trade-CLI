@@ -2,7 +2,7 @@ import select from "@inquirer/select";
 import chalk from "chalk";
 import input from "@inquirer/input";
 
-import { UserSingleton } from "../models/User.js";
+import { UserSingleton } from "../models/UserSingleton.js";
 import { joinTradeRoomService } from "../services/roomTrade.services.js";
 import { createSpinner } from "../helpers/customSpinner.js";
 import { MenuOptions } from "../types/menuOptions.types.js";

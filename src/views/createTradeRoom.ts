@@ -5,9 +5,11 @@ import { createTradeRoomService, deleteTradeRoomService } from "../services/room
 import { establishConnectionHost } from "../helpers/tradeLogic.js";
 import { tradeMenuList } from "./confirmTrade.js";
 import { MenuOptions } from "../types/menuOptions.types.js";
-import { UserSingleton } from "../models/User.js";
+import { UserSingleton } from "../models/UserSingleton.js";
+import { SpinnerSingleton } from "../models/SpinnerSingleton.js";
 
 const { user } = UserSingleton.getInstance();
+const spinning = SpinnerSingleton.getInstance();
 
 export const createTradeRoomMenu = async () => {
 	let tradeRoomId = "";
@@ -34,6 +36,8 @@ export const createTradeRoomMenu = async () => {
 				user_id: user.id,
 				username: user.username,
 			});
+
+			spinning.stopSpinner();
 
 			console.log(clientTradeRoom.roomInformation);
 			console.log(clientTradeRoom.subscriptionToTradeRoom);

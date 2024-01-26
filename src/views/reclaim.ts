@@ -1,7 +1,7 @@
 import { select } from "@inquirer/prompts";
 import chalk from "chalk";
 
-import { UserSingleton } from "../models/User.js";
+import { UserSingleton } from "../models/UserSingleton.js";
 import { checkCanReclaimCards } from "../helpers/handleTime.js";
 import { getRandomCardsService } from "../services/card.services.js";
 import { setTimeout } from "timers/promises";

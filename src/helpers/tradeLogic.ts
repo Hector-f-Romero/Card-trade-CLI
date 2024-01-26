@@ -6,12 +6,13 @@ import chalk from "chalk";
 import "dotenv/config";
 import { createClient } from "graphql-ws";
 
-import { UserSingleton } from "../models/User.js";
+import { UserSingleton } from "../models/UserSingleton.js";
 import { createSpinner } from "./customSpinner.js";
 import { JoinToRoomResponse } from "../types/trade.types.js";
 import { tradeMenuList } from "../views/confirmTrade.js";
+import { SpinnerSingleton } from "../models/SpinnerSingleton.js";
 
-export const connectUsers = async () => {};
+const spinning = SpinnerSingleton.getInstance();
 
 // export const joinTradeRoom = async (room_id: string, user: unknown) => {
 // 	// console.clear();
@@ -97,7 +98,10 @@ export const establishConnectionHost = async (room_id: string, user: { user_id: 
 				},
 			}
 		);
-		await createSpinner("Waiting for another user 10 seconds", 10000);
+
+		spinning.changeMessage("SE CAMBIÓ EL MENSAJE");
+		await spinning.startSpinner(20000);
+		// await createSpinner("Waiting for another user 10 seconds", 10000);
 		// console.log("Terminaron los 10 segundos");
 		if (!userJoin) {
 			client.terminate();

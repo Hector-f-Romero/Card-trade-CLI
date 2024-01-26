@@ -3,7 +3,7 @@ import { select } from "@inquirer/prompts";
 import password from "@inquirer/password";
 import chalk from "chalk";
 
-import { UserSingleton } from "../models/User.js";
+import { UserSingleton } from "../models/UserSingleton.js";
 import { createUserService, verifyUserExist } from "../services/user.services.js";
 import { createSpinner } from "../helpers/customSpinner.js";
 import { MenuOptions } from "../types/menuOptions.types.js";

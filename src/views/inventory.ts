@@ -1,7 +1,7 @@
 import select, { Separator } from "@inquirer/select";
 import chalk from "chalk";
 
-import { UserSingleton } from "../models/User.js";
+import { UserSingleton } from "../models/UserSingleton.js";
 import { getInventoryUser } from "../services/user.services.js";
 import { applyColorToRarity } from "../helpers/applyColors.js";
 import { MenuOptions } from "../types/menuOptions.types.js";

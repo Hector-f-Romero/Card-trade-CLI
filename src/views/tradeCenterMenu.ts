@@ -1,7 +1,7 @@
 import select from "@inquirer/select";
 import chalk from "chalk";
 
-import { UserSingleton } from "../models/User.js";
+import { UserSingleton } from "../models/UserSingleton.js";
 import { MenuOptions } from "../types/menuOptions.types.js";
 
 const { user } = UserSingleton.getInstance();
