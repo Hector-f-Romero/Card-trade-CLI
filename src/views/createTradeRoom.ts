@@ -3,7 +3,7 @@ import { select } from "@inquirer/prompts";
 
 import { createTradeRoomService, deleteTradeRoomService } from "../services/roomTrade.services.js";
 import { establishConnectionHost } from "../helpers/tradeLogic.js";
-import { tradeMenuList } from "./confirmTrade.js";
+import { onlineTradeMenuList } from "./confirmTrade.js";
 import { MenuOptions } from "../types/menuOptions.types.js";
 import { UserSingleton } from "../models/UserSingleton.js";
 import { SpinnerSingleton } from "../models/SpinnerSingleton.js";
@@ -42,23 +42,20 @@ export const createTradeRoomMenu = async () => {
 			console.log(clientTradeRoom.roomInformation);
 			console.log(clientTradeRoom.subscriptionToTradeRoom);
 
-			const opt = await tradeMenuList(clientTradeRoom.roomInformation);
+			const opt = await onlineTradeMenuList(clientTradeRoom.roomInformation);
 
 			optionTradeRoom = MenuOptions.NO_AVAILABLE;
 			return optionTradeRoom;
 		} catch (error) {
-			console.log("Estoy en el catch");
-			console.log(error);
-			console.log(tradeRoomId);
+			console.clear();
 			// Delete existing room
 			const result = await deleteTradeRoomService(tradeRoomId);
-			console.log(result.data.errors);
-
+			// console.log(result.data.errors);
 			optionTradeRoom = await select({
-				message: "What do you want to do?",
+				message: "An connection errror has occurred. What do you want to do?",
 				choices: [
 					{ value: MenuOptions.RETRY_CONNECTION, name: chalk.hex("2f9e44")("Try again") },
-					{ value: MenuOptions.TRADE, name: chalk.hex("e03131")("Back") },
+					{ value: MenuOptions.TRADE, name: chalk.hex("e03131")("Back to trade menu") },
 				],
 			});
 		}

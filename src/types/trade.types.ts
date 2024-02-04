@@ -11,3 +11,10 @@ export type UserRoom = {
 	user_id: string;
 	username: string;
 };
+
+export type PreviewCardToTrade = {
+	name: string;
+	value: number;
+	rarity: string;
+	amount: number;
+};

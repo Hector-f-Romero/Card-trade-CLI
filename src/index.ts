@@ -1,4 +1,6 @@
+import { UserSingleton } from "./models/UserSingleton.js";
 import { MenuOptions } from "./types/menuOptions.types.js";
+import { onlineTradeMenuList } from "./views/confirmTrade.js";
 import { createTradeRoomMenu } from "./views/createTradeRoom.js";
 import { homeMenu } from "./views/home.js";
 import { indexMenu } from "./views/index.js";
@@ -8,6 +10,8 @@ import { loginMenu } from "./views/login.js";
 import { reclaimCardsMenu } from "./views/reclaim.js";
 import { registerMenu } from "./views/register.js";
 import { tradeCenterMenu } from "./views/tradeCenterMenu.js";
+
+const { user } = UserSingleton.getInstance();
 
 // Use a main function to hanlde menu and interfaces
 const main = async () => {
@@ -48,6 +52,15 @@ const main = async () => {
 				option = await joinTradeRoomMenu();
 				break;
 			case MenuOptions.EXIT:
+				break;
+			case MenuOptions.TEST_ONLINE_TRADE_MENU:
+				option = await onlineTradeMenuList({
+					room_id: "aaaa",
+					users: [
+						{ user_id: user.id, username: user.username },
+						{ user_id: "test2", username: "TEST2" },
+					],
+				});
 				break;
 		}
 		// await pausa();

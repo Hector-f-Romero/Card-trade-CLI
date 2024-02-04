@@ -1,10 +1,12 @@
 import select from "@inquirer/select";
+
 import chalk from "chalk";
 
 import { TradeRoom } from "../types/trade.types.js";
 import { MenuOptions } from "../types/menuOptions.types.js";
+import { chooseCardsMenu } from "./chooseCardsTradeRoom.js";
 
-export const tradeMenuList = async (tradeRoom: TradeRoom) => {
+export const onlineTradeMenuList = async (tradeRoom: TradeRoom) => {
 	console.clear();
 	console.log("______________________________________________________________________________\n");
 	console.log(chalk.whiteBright(` Trade room id: ${chalk.bgGray(tradeRoom.room_id)}`));
@@ -13,7 +15,7 @@ export const tradeMenuList = async (tradeRoom: TradeRoom) => {
 	console.log("______________________________________________________________________________\n");
 
 	// Use Type Assertion to avoid problems with the type of choises attribute.
-	const option = await select({
+	let option = await select({
 		message: "Choose an option",
 		choices: [
 			{
@@ -25,7 +27,11 @@ export const tradeMenuList = async (tradeRoom: TradeRoom) => {
 				name: "Exit trade room",
 			},
 		],
-		pageSize: 15,
 	});
+
+	if (option === MenuOptions.CHOOSE_CARDS_TRADE_ROOM) {
+		option = await chooseCardsMenu(tradeRoom);
+	}
+
 	return option;
 };

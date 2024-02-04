@@ -9,9 +9,13 @@ const homeQuest = {
 	message: "What do you want to do?",
 	choices: [
 		{ value: MenuOptions.INVENTORY, name: chalk.hex("2f9e44")("Inventory") },
-		{ value: MenuOptions.RECLAIM, name: chalk.hex("1971c2")("Reclaim cards") },
+		{ value: MenuOptions.RECLAIM_CARDS, name: chalk.hex("1971c2")("Reclaim cards") },
 		{ value: MenuOptions.TRADE, name: chalk.hex("f08c00")("Trade") },
 		{ value: MenuOptions.INDEX, name: chalk.hex("e03131")("Exit") },
+		{
+			value: MenuOptions.TEST_ONLINE_TRADE_MENU,
+			name: "TEST Trade room",
+		},
 	],
 };
 

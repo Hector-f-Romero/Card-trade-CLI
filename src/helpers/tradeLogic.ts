@@ -1,18 +1,12 @@
 import WebSocket from "ws";
-import { setTimeout } from "timers/promises";
 
-import input from "@inquirer/input";
-import chalk from "chalk";
 import "dotenv/config";
 import { createClient } from "graphql-ws";
 
-import { UserSingleton } from "../models/UserSingleton.js";
-import { createSpinner } from "./customSpinner.js";
 import { JoinToRoomResponse } from "../types/trade.types.js";
-import { tradeMenuList } from "../views/confirmTrade.js";
 import { SpinnerSingleton } from "../models/SpinnerSingleton.js";
 
-const spinning = SpinnerSingleton.getInstance();
+const customSpinner = SpinnerSingleton.getInstance();
 
 // export const joinTradeRoom = async (room_id: string, user: unknown) => {
 // 	// console.clear();
@@ -90,6 +84,7 @@ export const establishConnectionHost = async (room_id: string, user: { user_id: 
 				error(data) {
 					console.log("ERROR");
 					console.log(data);
+					client.terminate();
 					reject(false);
 					// console.log(data[0].locations);
 				},
@@ -99,10 +94,8 @@ export const establishConnectionHost = async (room_id: string, user: { user_id: 
 			}
 		);
 
-		spinning.changeMessage("SE CAMBIÓ EL MENSAJE");
-		await spinning.startSpinner(20000);
-		// await createSpinner("Waiting for another user 10 seconds", 10000);
-		// console.log("Terminaron los 10 segundos");
+		await customSpinner.startSpinner("Waiting 8 seconds for another user", 8000);
+
 		if (!userJoin) {
 			client.terminate();
 			console.log("Se cerró la conexión");

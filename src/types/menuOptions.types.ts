@@ -12,5 +12,6 @@ export enum MenuOptions {
 	CHOOSE_CARDS_TRADE_ROOM = "chooseCardsTradeRoom",
 	NO_AVAILABLE = "no-available",
 	RETRY_CONNECTION = "retryConnection",
+	TEST_ONLINE_TRADE_MENU = "onlineTradeMenuList",
 	EXIT = "exit",
 }
